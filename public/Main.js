@@ -25,16 +25,13 @@ class Main {
     async start() {
         for (;;) {
             let userChoice = await this.getUserChoiceByMenu();
-            console.log("user choice:::", userChoice);
-            if (userChoice === this.apps[0].getCaption()) {
+            // console.log("user choice:::", userChoice)
+            if (userChoice === this.apps[0].getCaption())
                 this.apps[0].start();
-            }
-            else if (userChoice === this.apps[1].getCaption()) {
+            else if (userChoice === this.apps[1].getCaption())
                 this.apps[1].start();
-            }
-            else if (userChoice === this.apps[2].getCaption()) {
+            else if (userChoice === this.apps[2].getCaption())
                 this.apps[2].start();
-            }
             else if (userChoice === "Гарах") {
                 console.log("\nBye Bye!\n");
                 break;

@@ -14,7 +14,9 @@ class Study implements App {
 
     }
     start(): void {
-        console.log("Суралцах руу ороод ирлээ хө!")
+        console.log("Суралцах руу ороод ирлээ хө!");
+
+
     }
 
 }
