@@ -7,7 +7,7 @@ class Play implements App {
         this.caption = "Тоглох!";
     }
 
-    getCaption(): String {
+    getCaption(): string {
         return this.caption;
     }
     printMenu(): void {

@@ -9,6 +9,7 @@ class Study {
     printMenu() {
     }
     start() {
+        console.log("Суралцах руу ороод ирлээ хө!");
     }
 }
 export default Study;

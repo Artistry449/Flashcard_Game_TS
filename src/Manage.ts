@@ -1,13 +1,13 @@
 import App from "./App.js";
 
 class Manage implements App {
-    caption: string;
+    private caption: string;
 
     constructor() {
         this.caption = "Цуглуулгыг өөрчлөх!";
     }
 
-    getCaption(): String {
+    getCaption(): string {
         return this.caption;
     }
     printMenu(): void {

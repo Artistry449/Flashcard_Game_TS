@@ -9,22 +9,52 @@ class Main {
     apps: App[] = [];
 
     constructor() {
-        this.apps[1] = new Study();
-        this.apps[2] = new Play();
-        this.apps[3] = new Manage();
+        this.apps[0] = new Study();
+        this.apps[1] = new Play();
+        this.apps[2] = new Manage();
     }
 
-    printMenu(): void {
-        this.apps.map((el) => console.log(el.getCaption()));
+    async getUserChoiceByMenu() {
+        const choices = this.apps.map((app) => app.getCaption());
+        choices.push("Гарах");
+
+        const answer = await inquirer.prompt([
+            {
+                type: "list",
+                name: "userMenuChoice",
+                message: "Та меню-ээс сонголтоо хийнэ хүү",
+                choices
+            }
+        ]);
+
+        return answer["userMenuChoice"];
+    }
+
+    async start() {
+        for (; ;) {
+            let userChoice = await this.getUserChoiceByMenu();
+
+
+            console.log("user choice:::", userChoice)
+
+            if (userChoice === this.apps[0].getCaption()) {
+                this.apps[0].start();
+            }
+            else if (userChoice === this.apps[1].getCaption()) {
+                this.apps[1].start();
+            }
+            else if (userChoice === this.apps[2].getCaption()) {
+                this.apps[2].start();
+            }
+            else if (userChoice === "Гарах") {
+                console.log("\nBye Bye!\n")
+                break;
+            }
+
+        }
+
     }
 }
-
-let userChoice: number = 0;
 
 const main = new Main();
-
-for (; ;) {
-    main.printMenu();
-
-
-}
+main.start();

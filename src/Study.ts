@@ -7,14 +7,14 @@ class Study implements App {
         this.caption = "Суралцах!";
     }
 
-    getCaption(): String {
+    getCaption(): string {
         return this.caption;
     }
     printMenu(): void {
 
     }
     start(): void {
-
+        console.log("Суралцах руу ороод ирлээ хө!")
     }
 
 }
