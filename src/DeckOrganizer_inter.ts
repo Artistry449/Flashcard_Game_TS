@@ -21,7 +21,7 @@ interface DeckOrganizer_inter {
 
     getDecksSize(): number;
 
-    findDeck(deckName: string): Deck | null;
+    // findDeck(deckName: string);
 }
 
 export default DeckOrganizer_inter;

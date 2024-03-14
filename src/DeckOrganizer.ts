@@ -38,7 +38,7 @@ class DeckOrgaizer implements DeckOrganizer_inter {
 
             if (el) {
                 const parts = el.split("/");
-                console.log("1" + el.split("/")[1].split("="));
+                // console.log("1" + el.split("/")[1].split("="));
 
                 if (parts[0] === deck.getName()) {
                     const parts1 = parts[1].split("=");
@@ -77,7 +77,7 @@ class DeckOrgaizer implements DeckOrganizer_inter {
             }
         }
 
-        console.log("data::");
+        // console.log("data::");
         // console.log(data)
 
         this.fileManager1.clearFileData();
@@ -86,39 +86,26 @@ class DeckOrgaizer implements DeckOrganizer_inter {
 
     printAllDecks(): void { this.decks.map((el) => console.log(el)); }
 
-    getDecksSize(): number { return this.decks.length; }
+    getAllDecks() { return this.decks }
 
-    findDeck(deckName: string): Deck | null {
-        this.decks.map((el) => el.getName() === deckName ? el : null);
-        return null;
+    getDeck(deckName: string) {
+        // return this.decks[position]
+        return this.decks[this.findDeck(deckName)];
     }
 
-    start(): void {
-        // console.log(this.deckData)
-        // console.log(this.cardData)
+    getDecksSize(): number { return this.decks.length; }
 
-        // console.log("1:")
-        // this.decks.map((el) => console.log(el));
-        // this.decks.map((el) => console.log(el.getCards()));
-
-        // this.createDeck("hehe")
-        // this.createDeck("haha")
-
-        // // console.log("2:")
-        // this.decks.map((el) => console.log(el));
-
-        // this.decks[3].addCard(new Card("wqijoaklsm", "woeijadklms"))
-        // this.decks[3].addCard(new Card("weqwqwqeqwsda", "woeijadklms"))
-        // this.decks[4].addCard(new Card("weqwqwqeqwsda", "woeijadklms"))
-        // this.deleteDeck(0)
-        // console.log("3:")
-        // this.decks.map((el) => console.log(el));
-
-        this.pushDecksToDB();
-        this.pushCardsToDB();
+    // findDeck(deckName: string): Deck | null {
+    //     this.decks.map((el) => el.getName() === deckName ? el : null);
+    //     return null;
+    // }
+    findDeck(deckName: string): number {
+        for (let i = 0; i < this.decks.length; i++) {
+            if (this.decks[i].getName() === deckName) return i;
+        }
+        return -1;
     }
 
 }
 
-const deckOrganizer = new DeckOrgaizer();
-deckOrganizer.start();
+export default DeckOrgaizer;

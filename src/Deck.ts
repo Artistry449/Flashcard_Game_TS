@@ -46,6 +46,10 @@ class Deck implements Deck_inter {
         }
         return null;
     }
+
+    getCard(position: number): Card {
+        return this.Cards[position];
+    }
 }
 
 export default Deck;

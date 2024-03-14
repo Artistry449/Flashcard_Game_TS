@@ -22,7 +22,7 @@ class Main {
             {
                 type: "list",
                 name: "userMenuChoice",
-                message: "Та меню-ээс сонголтоо хийнэ хүү",
+                message: "Та меню-ээс сонголтоо хийнэ үү",
                 choices
             }
         ]);
@@ -36,11 +36,11 @@ class Main {
 
             // console.log("user choice:::", userChoice)
 
-            if (userChoice === this.apps[0].getCaption()) this.apps[0].start();
+            if (userChoice === this.apps[0].getCaption()) await this.apps[0].start();
 
-            else if (userChoice === this.apps[1].getCaption()) this.apps[1].start();
+            else if (userChoice === this.apps[1].getCaption()) await this.apps[1].start();
 
-            else if (userChoice === this.apps[2].getCaption()) this.apps[2].start();
+            else if (userChoice === this.apps[2].getCaption()) await this.apps[2].start();
 
             else if (userChoice === "Гарах") {
                 console.log("\nBye Bye!\n")

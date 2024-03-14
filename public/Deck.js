@@ -33,5 +33,8 @@ class Deck {
         }
         return null;
     }
+    getCard(position) {
+        return this.Cards[position];
+    }
 }
 export default Deck;
