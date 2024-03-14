@@ -1,9 +1,9 @@
 interface FileManager_inter {
-    // readFile(): string[];
+    readFile(): string[];
 
-    // writeFile(fileContent: string): void;
+    writeFile(fileContent: string): void;
 
-    // clearFileData(): void;
+    clearFileData(): void;
 }
 
 export default FileManager_inter;

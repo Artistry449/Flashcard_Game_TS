@@ -1,17 +1,11 @@
-import FileManager_inter from "./FileManager_inter.js"
 import * as fs from "fs";
-
-
-class FileManager implements FileManager_inter {
-    fileName: string;
-
-    constructor(fileName: string) {
+class FileManager {
+    fileName;
+    constructor(fileName) {
         this.fileName = fileName;
     }
-
-    readFile(): string[] {
-        let list: string[] = [];
-
+    readFile() {
+        let list = [];
         try {
             const data = fs.readFileSync(this.fileName, "utf-8");
             list = data.split("\n");
@@ -19,23 +13,18 @@ class FileManager implements FileManager_inter {
         catch (e) {
             console.log("Мэдээлэл татахад алдаа үүслээ!");
         }
-
         return list;
-
     }
-
-    writeFile(fileContent: string): void {
-
+    writeFile(fileContent) {
         try {
             fs.writeFileSync(this.fileName, fileContent, { flag: "a", encoding: "utf-8" });
             console.log("Data written!");
-
-        } catch (e) {
+        }
+        catch (e) {
             console.log("Мэдээлэл бичихэд алдаа үүслээ!");
         }
     }
-
-    clearFileData(): void {
+    clearFileData() {
         try {
             fs.writeFileSync(this.fileName, "");
         }
@@ -44,5 +33,4 @@ class FileManager implements FileManager_inter {
         }
     }
 }
-
 export default FileManager;

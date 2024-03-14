@@ -1,27 +1,27 @@
 import Deck from "./Deck.js";
 
 interface DeckOrganizer_inter {
-    // createDeck(name: string): void;
+    createDeck(name: string): void;
 
-    // updateDeck(name: string, newName: string): boolean;
+    updateDeck(position: number, newName: string): void;
 
-    // deleteDeck(name: string): boolean;
+    deleteDeck(position: number): void;
 
-    // optimizeDecksData(): void;
+    optimizeDecksData(): void;
 
-    // optimizeCardsToItsDeck(deck: Deck): void;
+    optimizeCardsToItsDeck(deck: Deck): void;
 
-    // pushDecksToDB(): void;
+    pushDecksToDB(): void;
 
-    // pushCardsToDB(): void;
+    pushCardsToDB(): void;
 
     // pushToDB(): void;
 
-    // printAllDecks(): void;
+    printAllDecks(): void;
 
-    // getDecksSize(): number;
+    getDecksSize(): number;
 
-    // findDeck(deckName: string): Deck;
+    findDeck(deckName: string): Deck | null;
 }
 
 export default DeckOrganizer_inter;
