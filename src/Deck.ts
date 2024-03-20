@@ -39,16 +39,21 @@ class Deck implements Deck_inter {
         return this.Cards;
     }
 
-    findCard(cardQuestion: string): number | null {
+    findCard(cardQuestion: string): number {
         for (let i = 0; i < this.Cards.length; i++) {
             if (this.Cards[i].getQuestion() === cardQuestion)
                 return i;
         }
-        return null;
+        return -1;
     }
 
     getCard(position: number): Card {
         return this.Cards[position];
+    }
+
+
+    getCardSize(): number {
+        return this.Cards.length;
     }
 }
 

@@ -55,7 +55,17 @@ class DeckOrgaizer implements DeckOrganizer_inter {
 
     updateDeck(position: number, newName: string): void { this.decks[position].editName(newName); }
 
-    deleteDeck(position: number): void { this.decks.splice(position, 1); }
+    // deleteDeck(position: number): void { this.decks.splice(position, 1); }
+
+    deleteDeck(deckName: string) {
+        console.log(deckName)
+        if (this.findDeck(deckName) !== -1) {
+            this.decks.splice(this.findDeck(deckName), 1);
+            console.log("Ширээ амжилттай устгагдлаа!");
+        }
+        else console.log("Ширээ устгах оролдлого амжилтгүй.");
+
+    }
     // -----------------------
 
     pushDecksToDB(): void {

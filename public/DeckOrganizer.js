@@ -40,7 +40,16 @@ class DeckOrgaizer {
     // -----Ширээний CRUD-----
     createDeck(name) { this.decks.push(new Deck(name)); }
     updateDeck(position, newName) { this.decks[position].editName(newName); }
-    deleteDeck(position) { this.decks.splice(position, 1); }
+    // deleteDeck(position: number): void { this.decks.splice(position, 1); }
+    deleteDeck(deckName) {
+        console.log(deckName);
+        if (this.findDeck(deckName) !== -1) {
+            this.decks.splice(this.findDeck(deckName), 1);
+            console.log("Ширээ амжилттай устгагдлаа!");
+        }
+        else
+            console.log("Ширээ устгах оролдлого амжилтгүй.");
+    }
     // -----------------------
     pushDecksToDB() {
         let data = "";

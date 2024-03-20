@@ -31,10 +31,13 @@ class Deck {
             if (this.Cards[i].getQuestion() === cardQuestion)
                 return i;
         }
-        return null;
+        return -1;
     }
     getCard(position) {
         return this.Cards[position];
+    }
+    getCardSize() {
+        return this.Cards.length;
     }
 }
 export default Deck;

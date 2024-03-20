@@ -32,6 +32,7 @@ class Main {
 
     async start() {
         for (; ;) {
+            console.clear();
             let userChoice = await this.getUserChoiceByMenu();
 
             // console.log("user choice:::", userChoice)

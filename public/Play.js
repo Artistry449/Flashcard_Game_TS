@@ -37,19 +37,33 @@ class Play {
     }
     // PLAY START
     async start() {
+        console.clear();
         for (;;) {
             // Хэрэглэгчээс ширээнийх нь нэрийг авах
             let userChoice = await this.printMenu();
             console.log();
-            console.log("\nАсуулт хариултын тоглоом эхэллээ!\n");
             let deck = this.deckOrganizer.getDeck(userChoice);
-            let randomNum = this.getRandomInt(deck.getCards().length);
-            // console.log("RANDOM NUM:::", randomNum)
-            for (let i = 0; i < randomNum; i++) {
-                let card = deck.getCard(this.getRandomInt(randomNum));
-                let userAnswer = await this.askQA(card.getQuestion());
-                console.log(userAnswer);
-                // if(userAnswer === card.getAnswer())
+            if (userChoice === "<<Буцах")
+                return;
+            else {
+                if (deck && deck.getCardSize() > 0) {
+                    console.log("\nАсуулт хариултын тоглоом эхэллээ!\n");
+                    let randomNum = this.getRandomInt(deck.getCards().length);
+                    let score = 0;
+                    for (let i = 0; i < randomNum; i++) {
+                        let card = deck.getCard(this.getRandomInt(randomNum));
+                        let userAnswer = await this.askQA(card.getQuestion());
+                        console.log(userAnswer);
+                        if (userAnswer === card.getAnswer()) {
+                            console.log("\nХариулт зөв байна.\n");
+                            score++;
+                        }
+                        else {
+                            console.log("\nХариулт буруу байна.\n");
+                        }
+                    }
+                    console.log("\nТаны оноо: " + score + "\n");
+                }
             }
         }
     }

@@ -47,6 +47,7 @@ class Study implements App {
     }
 
     async start() {
+        console.clear();
         for (; ;) {
             console.clear();
             let userChoice = await this.printMenu();

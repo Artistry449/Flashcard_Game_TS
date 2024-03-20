@@ -5,7 +5,9 @@ interface DeckOrganizer_inter {
 
     updateDeck(position: number, newName: string): void;
 
-    deleteDeck(position: number): void;
+    // deleteDeck(position: number): void;
+
+    deleteDeck(deckName: string): void;
 
     optimizeDecksData(): void;
 

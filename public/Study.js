@@ -39,6 +39,7 @@ class Study {
         return answer["userMenuChoice"];
     }
     async start() {
+        console.clear();
         for (;;) {
             console.clear();
             let userChoice = await this.printMenu();
