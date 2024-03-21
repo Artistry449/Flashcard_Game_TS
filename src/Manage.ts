@@ -1,11 +1,12 @@
 import inquirer from "./inquirer.js";
 import App from "./App.js";
-import DeckOrgaizer from "./DeckOrganizer.js";
+// import DeckOrgaizer from "./DeckOrganizer.js";
+import deckOrganizer from "./DeckOrganizerInstance.js";
 import InquirerMethod from "./InquirerMethod.js";
 
 class Manage implements App {
     private caption: string;
-    private deckOrganizer = new DeckOrgaizer();
+    // private deckOrganizer = new DeckOrgaizer();
 
     constructor() {
         this.caption = "Цуглуулгыг өөрчлөх!";
@@ -33,10 +34,12 @@ class Manage implements App {
         return answer.userMenuChoice;
     }
     async printDecks() {
-        const choices = this.deckOrganizer.getAllDecks().map(el => el.getName());
-        choices.push("Шинэ ширээ нэмэх")
-        choices.push("<<Буцах");
+        const choices = deckOrganizer.getAllDecks().map(el => el.getName());
+        console.log(deckOrganizer.getDecksSize());
+        // console.log("deck choices iin hemjee::::" + choices.length);
+        if (choices.length === 0) console.log("Одоогоор ширээ байхгүй байна");
 
+        choices.push("<<Буцах");
         const answer = await inquirer.prompt([
             {
                 type: "list",
@@ -50,7 +53,8 @@ class Manage implements App {
     }
 
     async printDeckCardMenu(deckName: string) {
-        const choices = this.deckOrganizer.getDeck(deckName).getCards().map((el) => el.getQuestion());
+        const choices = deckOrganizer.getDeck(deckName).getCards().map((el) => el.getQuestion());
+        if (choices.length === 0) console.log("Тус ширээнд карт байхгүй байна.");
         choices.push("<<Буцах");
         const answer = await inquirer.prompt([
             {
@@ -64,26 +68,54 @@ class Manage implements App {
     }
     async start() {
         console.clear();
+
         for (; ;) {
-            let userChoice = await this.printMenu();
+            let userMenuChoice = await this.printMenu();
 
-            if (userChoice === "<<Буцах") break;
+            // console.log(userMenuChoice);
 
-            else if (userChoice === "Ширээний нэр өөрчлөх") {
-                let deck = await this.printDecks();
+            if (userMenuChoice === "<<Буцах") return;
 
-                const prompt = new InquirerMethod("input", "Шинэ нэр:");
+            else if (userMenuChoice === "Ширээний нэр өөрчлөх") {
+                console.clear();
+                let userMenuChoice = await this.printDecks();
 
-                if (this.deckOrganizer.getDeck(deck))
-                    this.deckOrganizer.getDeck(deck).editName(await prompt.prompt("Шинэ нэр:"))
+                if (userMenuChoice === "<<Буцах")
+                    continue;
+                // else {
+                let deck = await deckOrganizer.findDeck(userMenuChoice);
+
+                let inputer = new InquirerMethod("input", "changeDeckName");
+
+                let newDeckName = await inputer.prompt("Ширээний шинэ нэрийг оруулна уу");
+
+                // if (userMenuChoice === "<<Буцах") return;
+                // deck.editName(newDeckName);
+                deckOrganizer.updateDeck(deck, newDeckName);
+                deckOrganizer.pushDecksToDB();
+                console.log("Ширээний нэр амжилттай өөрчлөгдлөө!");
+
+                // }
+
             }
-            else if (userChoice === "Ширээ устгах") {
-                let deck = await this.printDecks();
+            else if (userMenuChoice === "Ширээ устгах") {
+                console.clear();
+                console.log("Аль ширээг устгах вэ?")
 
-                if (deck !== "<<Буцах")
-                    this.deckOrganizer.deleteDeck(deck);
+                let listChoice = deckOrganizer.getAllDecks().map((el) => el.getName());
+                listChoice.push("<<Буцах");
+
+                let inputer = new InquirerMethod("list", "deleteDeck");
+
+
+                let userDeckChoice = await inputer.promptMany(listChoice);
+                if (userDeckChoice === "<<Буцах") continue;
+                deckOrganizer.deleteDeck(userDeckChoice);
+
+                deckOrganizer.pushDecksToDB();
+                deckOrganizer.pushCardsToDB();
             }
-            else if (userChoice === "Картны асуулт өөрчлөх") {
+            else if (userMenuChoice === "Картны асуулт өөрчлөх") {
                 let deck = await this.printDecks();
 
                 if (deck !== "<<Буцах") {
@@ -91,11 +123,12 @@ class Manage implements App {
 
                     const prompt = new InquirerMethod("input", "Шинэ асуулт:");
 
-                    if (card !== "Буцах")
-                        this.deckOrganizer.getDeck(deck).getCard(this.deckOrganizer.getDeck(deck).findCard(card)).editQuestion(await prompt.prompt("Шинэ асуулт:"))
+                    if (card !== "<<Буцах")
+                        deckOrganizer.getDeck(deck).getCard(deckOrganizer.getDeck(deck).findCard(card)).editQuestion(await prompt.prompt("Шинэ асуулт:"))
                 }
+                deckOrganizer.pushCardsToDB();
             }
-            else if (userChoice === "Картны хариулт өөрчлөх") {
+            else if (userMenuChoice === "Картны хариулт өөрчлөх") {
                 let deck = await this.printDecks();
 
                 if (deck !== "<<Буцах") {
@@ -103,22 +136,26 @@ class Manage implements App {
 
                     const prompt = new InquirerMethod("input", "Шинэ хариулт:");
 
-                    if (card !== "Буцах")
-                        this.deckOrganizer.getDeck(deck).getCard(this.deckOrganizer.getDeck(deck).findCard(card)).editAnswer(await prompt.prompt("Шинэ хариулт:"))
+                    if (card !== "<<Буцах")
+                        deckOrganizer.getDeck(deck).getCard(deckOrganizer.getDeck(deck).findCard(card)).editAnswer(await prompt.prompt("Шинэ хариулт:"))
                 }
+                deckOrganizer.pushCardsToDB();
+
             }
-            else if (userChoice === "Карт устгах") {
+            else if (userMenuChoice === "Карт устгах") {
                 let deck = await this.printDecks();
 
                 if (deck !== "<<Буцах") {
                     let card = await this.printDeckCardMenu(deck);
 
-                    if (card !== "Буцах")
-                        this.deckOrganizer.getDeck(deck).deleteCard(this.deckOrganizer.getDeck(deck).findCard(card));
+                    if (card !== "<<Буцах")
+                        deckOrganizer.getDeck(deck).deleteCard(deckOrganizer.getDeck(deck).findCard(card));
                 }
+                deckOrganizer.pushCardsToDB();
             }
 
         }
+
     }
 
 }

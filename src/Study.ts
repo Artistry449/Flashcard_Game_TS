@@ -1,13 +1,14 @@
 import App from "./App.js";
 import inquirer from "./inquirer.js";
-import DeckOrgaizer from "./DeckOrganizer.js";
+// import DeckOrgaizer from "./DeckOrganizer.js";
+import deckOrganizer from "./DeckOrganizerInstance.js";
 import Deck from "./Deck.js";
 import Card from "./Card.js";
 import InquirerMethod from "./InquirerMethod.js";
 
 class Study implements App {
     private caption: string;
-    private deckOrganizer = new DeckOrgaizer();
+    // private deckOrganizer = new DeckOrgaizer();
 
     constructor() {
         this.caption = "Суралцах!";
@@ -17,7 +18,7 @@ class Study implements App {
         return this.caption;
     }
     async printMenu() {
-        const choices = this.deckOrganizer.getAllDecks().map(el => el.getName());
+        const choices = deckOrganizer.getAllDecks().map(el => el.getName());
         choices.push("Шинэ ширээ нэмэх")
         choices.push("<<Буцах");
 
@@ -54,7 +55,6 @@ class Study implements App {
 
             // Бүртгэгдсэн байгаа ширээнүүдийг хэвлээд хэрвээ хэрэглэгч аль нэг ширээг сонговол тус ширээнд байгаа картнуудыг хэвлээд + шинэ карт нэмэх товчийг гаргаж ирнэ эсрэг тохиолдолд буцна.
 
-
             // Хэрэглэгч буцах-ыг сонговол
             if (userChoice === "<<Буцах") return;
 
@@ -64,13 +64,15 @@ class Study implements App {
 
                 let name = await prompt.prompt("Та шинэ ширээний нэрийг оруулна уу");
 
-                this.deckOrganizer.createDeck(name);
+                deckOrganizer.createDeck(name);
+                deckOrganizer.pushDecksToDB();
+
             }
             // Хэрэглэгч ширээ сонговол
             else {
                 console.clear();
 
-                let deck = this.deckOrganizer.getDeck(userChoice);
+                let deck = deckOrganizer.getDeck(userChoice);
 
                 console.log("\n" + deck.getName() + " ширээний картнууд: " + " \n");
                 deck.printAllCards();
@@ -92,7 +94,8 @@ class Study implements App {
 
                     let answer = await prompt.prompt("Та шинэ картны хариултыг оруулна уу");
 
-                    deck.addCard(new Card(question, answer))
+                    deck.addCard(new Card(question, answer));
+                    deckOrganizer.pushCardsToDB();
                 }
 
             }

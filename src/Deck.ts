@@ -1,6 +1,5 @@
 import Card from "./Card.js";
 import Deck_inter from "./Deck_inter.js";
-import FileManager from "./FileManager.js";
 
 class Deck implements Deck_inter {
     private name: string;

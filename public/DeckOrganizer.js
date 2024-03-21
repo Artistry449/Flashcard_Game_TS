@@ -38,8 +38,12 @@ class DeckOrgaizer {
         // this.decks.map(el => console.log(el.getCards()))
     }
     // -----Ширээний CRUD-----
-    createDeck(name) { this.decks.push(new Deck(name)); }
-    updateDeck(position, newName) { this.decks[position].editName(newName); }
+    createDeck(name) {
+        this.decks.push(new Deck(name));
+    }
+    updateDeck(position, newName) {
+        this.decks[position].editName(newName);
+    }
     // deleteDeck(position: number): void { this.decks.splice(position, 1); }
     deleteDeck(deckName) {
         console.log(deckName);
@@ -70,11 +74,22 @@ class DeckOrgaizer {
         this.fileManager1.clearFileData();
         this.fileManager1.writeFile(data);
     }
+    // optimizeData(): void {
+    //     this.deckData = this.fileManager.readFile();
+    //     this.cardData = this.fileManager1.readFile();
+    //     this.decks = [];
+    //     this.optimizeDecksData();
+    // }
     printAllDecks() { this.decks.map((el) => console.log(el)); }
     getAllDecks() { return this.decks; }
     getDeck(deckName) {
         // return this.decks[position]
-        return this.decks[this.findDeck(deckName)];
+        let deck = this.findDeck(deckName);
+        // console.log("getDeck dotorh deckiin ner" + deckName)
+        // console.log("oldson deck:" + this.findDeck(deckName))
+        return this.decks[deck];
+        // this.decks.find((el) => el.getName() === deckName ? el : null);
+        // return null;
     }
     getDecksSize() { return this.decks.length; }
     // findDeck(deckName: string): Deck | null {
@@ -82,6 +97,7 @@ class DeckOrgaizer {
     //     return null;
     // }
     findDeck(deckName) {
+        // console.log("findDeck dotor irj bgaa deckiin ner: " + deckName + "s")
         for (let i = 0; i < this.decks.length; i++) {
             if (this.decks[i].getName() === deckName)
                 return i;

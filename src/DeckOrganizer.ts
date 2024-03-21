@@ -51,9 +51,13 @@ class DeckOrgaizer implements DeckOrganizer_inter {
     }
 
     // -----Ширээний CRUD-----
-    createDeck(name: string): void { this.decks.push(new Deck(name)) }
+    createDeck(name: string): void {
+        this.decks.push(new Deck(name));
+    }
 
-    updateDeck(position: number, newName: string): void { this.decks[position].editName(newName); }
+    updateDeck(position: number, newName: string): void {
+        this.decks[position].editName(newName);
+    }
 
     // deleteDeck(position: number): void { this.decks.splice(position, 1); }
 
@@ -61,6 +65,8 @@ class DeckOrgaizer implements DeckOrganizer_inter {
         console.log(deckName)
         if (this.findDeck(deckName) !== -1) {
             this.decks.splice(this.findDeck(deckName), 1);
+
+
             console.log("Ширээ амжилттай устгагдлаа!");
         }
         else console.log("Ширээ устгах оролдлого амжилтгүй.");
@@ -93,6 +99,12 @@ class DeckOrgaizer implements DeckOrganizer_inter {
         this.fileManager1.clearFileData();
         this.fileManager1.writeFile(data);
     }
+    // optimizeData(): void {
+    //     this.deckData = this.fileManager.readFile();
+    //     this.cardData = this.fileManager1.readFile();
+    //     this.decks = [];
+    //     this.optimizeDecksData();
+    // }
 
     printAllDecks(): void { this.decks.map((el) => console.log(el)); }
 
@@ -100,7 +112,14 @@ class DeckOrgaizer implements DeckOrganizer_inter {
 
     getDeck(deckName: string) {
         // return this.decks[position]
-        return this.decks[this.findDeck(deckName)];
+
+        let deck = this.findDeck(deckName);
+        // console.log("getDeck dotorh deckiin ner" + deckName)
+        // console.log("oldson deck:" + this.findDeck(deckName))
+        return this.decks[deck];
+
+        // this.decks.find((el) => el.getName() === deckName ? el : null);
+        // return null;
     }
 
     getDecksSize(): number { return this.decks.length; }
@@ -110,6 +129,7 @@ class DeckOrgaizer implements DeckOrganizer_inter {
     //     return null;
     // }
     findDeck(deckName: string): number {
+        // console.log("findDeck dotor irj bgaa deckiin ner: " + deckName + "s")
         for (let i = 0; i < this.decks.length; i++) {
             if (this.decks[i].getName() === deckName) return i;
         }

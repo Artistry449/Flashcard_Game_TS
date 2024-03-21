@@ -13,8 +13,18 @@ class InquirerMethod {
             {
                 type: this.type,
                 name: this.name,
-                message: message
+                message
                 // choices: this.choices
+            }
+        ]);
+        return answer[this.name];
+    }
+    async promptMany(menuArr) {
+        const answer = await inquirer.prompt([
+            {
+                type: this.type,
+                name: this.name,
+                choices: menuArr
             }
         ]);
         return answer[this.name];

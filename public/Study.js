@@ -1,10 +1,11 @@
 import inquirer from "./inquirer.js";
-import DeckOrgaizer from "./DeckOrganizer.js";
+// import DeckOrgaizer from "./DeckOrganizer.js";
+import deckOrganizer from "./DeckOrganizerInstance.js";
 import Card from "./Card.js";
 import InquirerMethod from "./InquirerMethod.js";
 class Study {
     caption;
-    deckOrganizer = new DeckOrgaizer();
+    // private deckOrganizer = new DeckOrgaizer();
     constructor() {
         this.caption = "Суралцах!";
     }
@@ -12,7 +13,7 @@ class Study {
         return this.caption;
     }
     async printMenu() {
-        const choices = this.deckOrganizer.getAllDecks().map(el => el.getName());
+        const choices = deckOrganizer.getAllDecks().map(el => el.getName());
         choices.push("Шинэ ширээ нэмэх");
         choices.push("<<Буцах");
         const answer = await inquirer.prompt([
@@ -51,12 +52,13 @@ class Study {
             else if (userChoice === "Шинэ ширээ нэмэх") {
                 const prompt = new InquirerMethod("input", "newDeck");
                 let name = await prompt.prompt("Та шинэ ширээний нэрийг оруулна уу");
-                this.deckOrganizer.createDeck(name);
+                deckOrganizer.createDeck(name);
+                deckOrganizer.pushDecksToDB();
             }
             // Хэрэглэгч ширээ сонговол
             else {
                 console.clear();
-                let deck = this.deckOrganizer.getDeck(userChoice);
+                let deck = deckOrganizer.getDeck(userChoice);
                 console.log("\n" + deck.getName() + " ширээний картнууд: " + " \n");
                 deck.printAllCards();
                 console.log();
@@ -72,6 +74,7 @@ class Study {
                     let question = await prompt.prompt("Та шинэ картны асуултыг оруулна уу");
                     let answer = await prompt.prompt("Та шинэ картны хариултыг оруулна уу");
                     deck.addCard(new Card(question, answer));
+                    deckOrganizer.pushCardsToDB();
                 }
             }
         }

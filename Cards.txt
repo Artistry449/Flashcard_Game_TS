@@ -1,12 +1,10 @@
-English words/ustgahCard=ustgahCardAnswer
 English words/question2=answer2
-Daily words/question3=answer3
-Daily words/question4=answer4
 English words/question1=answer1
 English words/question2=answer2
-Daily words/question3=answer3
-Daily words/question4=answer4
 English words/question1=answer1
 English words/question2=answer2
+Daily words/question4=answer4
+Daily words/question3=answer3
+Daily words/question4=answer4
 Daily words/question3=answer3
 Daily words/question4=answer4

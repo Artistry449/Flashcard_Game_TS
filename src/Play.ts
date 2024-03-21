@@ -1,10 +1,11 @@
 import inquirer from "./inquirer.js";
 import App from "./App.js";
-import DeckOrgaizer from "./DeckOrganizer.js";
+// import DeckOrgaizer from "./DeckOrganizer.js";
+import deckOrganizer from "./DeckOrganizerInstance.js";
 
 class Play implements App {
     private caption: string;
-    private deckOrganizer = new DeckOrgaizer();
+    // private deckOrganizer = new DeckOrgaizer();
 
     constructor() {
         this.caption = "Тоглох!";
@@ -15,7 +16,7 @@ class Play implements App {
     }
     async printMenu() {
         // const choices = this.deckOrganizer.getAllDecks().map(el => el.getName())
-        const choices = this.deckOrganizer.getAllDecks().map(el => el.getName());
+        const choices = deckOrganizer.getAllDecks().map(el => el.getName());
         choices.push("<<Буцах");
 
         const answer = await inquirer.prompt([
@@ -51,7 +52,7 @@ class Play implements App {
             // Хэрэглэгчээс ширээнийх нь нэрийг авах
             let userChoice = await this.printMenu();
             console.log()
-            let deck = this.deckOrganizer.getDeck(userChoice);
+            let deck = deckOrganizer.getDeck(userChoice);
 
             if (userChoice === "<<Буцах") return;
             else {
